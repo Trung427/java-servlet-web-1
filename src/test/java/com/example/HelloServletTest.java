@@ -1,14 +1,15 @@
 package com.example;
 
-import static org.mockito.Mockito.*;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.junit.jupiter.api.Test;
 
 public class HelloServletTest {
     @Test
@@ -27,6 +28,6 @@ public class HelloServletTest {
         writer.flush();
         String output = stringWriter.toString().trim();
         org.junit.jupiter.api.Assertions.assertEquals(
-                "<h1>Hello, World, I am a servlet, 10.06.2025!</h1>", output);
+                "<h1>Hello, World, I am a servlet, 19.06.2025!</h1>", output);
     }
 }
