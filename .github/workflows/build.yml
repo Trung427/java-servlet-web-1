@@ -43,6 +43,7 @@ jobs:
 
       - name: Stop Tomcat
         run: |
+          powershell -ExecutionPolicy Bypass -Command
           $shutdown = 'D:\Tom10\apache-tomcat-10.1.41\bin\shutdown.bat'
           if (Test-Path $shutdown) {
             & $shutdown
