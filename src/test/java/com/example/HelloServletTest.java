@@ -28,6 +28,6 @@ public class HelloServletTest {
         writer.flush();
         String output = stringWriter.toString().trim();
         org.junit.jupiter.api.Assertions.assertEquals(
-                "<h1>Hello, World, I am a servlet, 22.06.2025!</h1>", output);
+                "<h1>Hello, World, I am a servlet, 15.06.2025!</h1>", output);
     }
 }
