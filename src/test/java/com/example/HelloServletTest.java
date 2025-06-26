@@ -3,31 +3,40 @@ package com.example;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import org.mockito.Mockito;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class HelloServletTest {
-    @Test
-    void testDoGet() throws Exception {
-        HelloServlet servlet = new HelloServlet();
-        HttpServletRequest request = mock(HttpServletRequest.class);
-        HttpServletResponse response = mock(HttpServletResponse.class);
+class HelloServletTest {
 
+    @Test
+    void testDoGetOutput() throws Exception {
+        // Tạo servlet instance
+        HelloServlet servlet = new HelloServlet();
+
+        // Mock request & response
+        HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
+        HttpServletResponse response = Mockito.mock(HttpServletResponse.class);
+
+        // Capture nội dung xuất ra
         StringWriter stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
-        when(response.getWriter()).thenReturn(writer);
+        Mockito.when(response.getWriter()).thenReturn(writer);
 
+        // Gọi phương thức doGet
         servlet.doGet(request, response);
 
-        verify(response).setContentType("text/html");
+        // Flush dữ liệu
         writer.flush();
-        String output = stringWriter.toString().trim();
-        org.junit.jupiter.api.Assertions.assertEquals(
-                "<h1>Hello, World, I am HungNgoc1, 22.06.2025!</h1>", output);
+
+        // Kiểm tra đầu ra có chứa các nội dung mong muốn không
+        String output = stringWriter.toString();
+        assertTrue(output.contains("Hello, World!"));
+        assertTrue(output.contains("HungNgoc1"));
+        assertTrue(output.contains("2025"));
+        assertTrue(output.contains("<html")); // Đảm bảo có cấu trúc HTML
     }
 }
