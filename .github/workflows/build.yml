@@ -52,8 +52,19 @@ jobs:
         PowerShell -ExecutionPolicy Bypass -Command "if (Test-Path 'D:\Tom10\apache-tomcat-10.1.41\bin\startup.bat') { & 'D:\Tom10\apache-tomcat-10.1.41\bin\startup.bat' } else { Write-Error 'startup.bat not found!'; exit 1 }; Start-Sleep -Seconds 60"
       shell: cmd
 
-    - name: Verify Deployment
+        - name: Verify Deployment
       run: |
-        PowerShell -ExecutionPolicy Bypass -Command "Start-Sleep -Seconds 10; $res = Invoke-WebRequest -Uri 'http://localhost:8081/java-servlet-web-1.0-SNAPSHOT/hello'
-        UseBasicParsing -ErrorAction SilentlyContinue; if ($res.StatusCode -eq 200) { Write-Host 'Deployment successful!' } else { Write-Error ' Deployment failed or invalid response.'; exit 1 }"
-      shell: cmd
+        Start-Sleep -Seconds 10
+        try {
+          $res = Invoke-WebRequest -Uri 'http://localhost:8081/java-servlet-web-1.0-SNAPSHOT/hello' -ErrorAction Stop
+          if ($res.StatusCode -eq 200) {
+            Write-Host "Deployment successful!"
+          } else {
+            Write-Error "Deployment failed or returned invalid response."
+            exit 1
+          }
+        } catch {
+          Write-Error "Could not connect to server: $_"
+          exit 1
+        }
+      shell: pwsh
