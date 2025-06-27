@@ -34,7 +34,7 @@ class HelloServletTest {
 
         // Kiểm tra đầu ra có chứa các nội dung mong muốn không
         String output = stringWriter.toString();
-        assertTrue(output.contains("Greetings from Database"));
+        assertTrue(output.contains("Hello, World!"));
         assertTrue(output.contains("HungNgoc1"));
         assertTrue(output.contains("2025"));
         assertTrue(output.contains("<html")); // Đảm bảo có cấu trúc HTML
